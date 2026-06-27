@@ -195,6 +195,4 @@ All endpoints are prefixed with `/api/v1` and accessed through the gateway at po
 | `/api/v1/notifications/**` | Notification Service |
 | `/api/v1/reviews/**` | Review Service |
 
-## License
 
-This project is licensed under the MIT License.
