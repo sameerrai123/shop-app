@@ -1,0 +1,100 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: ${services.user.url}
+          predicates:
+            - Path=/user-service/**
+          filters:
+            - StripPrefix=1
+
+        - id: product-service
+          uri: ${services.product.url}
+          predicates:
+            - Path=/product-service/**
+          filters:
+            - StripPrefix=1
+
+        - id: order-service
+          uri: ${services.order.url}
+          predicates:
+            - Path=/order-service/**
+          filters:
+            - StripPrefix=1
+
+        - id: cart-service
+          uri: ${services.cart.url}
+          predicates:
+            - Path=/cart-service/**
+          filters:
+            - StripPrefix=1
+
+        - id: payment-service
+          uri: ${services.payment.url}
+          predicates:
+            - Path=/payment-service/**
+          filters:
+            - StripPrefix=1
+
+        - id: shipping-service
+          uri: ${services.shipping.url}
+          predicates:
+            - Path=/shipping-service/**
+          filters:
+            - StripPrefix=1
+
+        - id: notification-service
+          uri: ${services.notification.url}
+          predicates:
+            - Path=/notification-service/**
+          filters:
+            - StripPrefix=1
+
+        - id: review-service
+          uri: ${services.review.url}
+          predicates:
+            - Path=/review-service/**
+          filters:
+            - StripPrefix=1
+
+jwt:
+  secret: ${JWT_SECRET:mySecretKeyForJWTTokenGenerationThatIsLongEnoughForHS256Algorithm2024}
+
+services:
+  user:
+    url: ${USER_SERVICE_URL:http://localhost:8083}
+  product:
+    url: ${PRODUCT_SERVICE_URL:http://localhost:8089}
+  order:
+    url: ${ORDER_SERVICE_URL:http://localhost:8082}
+  cart:
+    url: ${CART_SERVICE_URL:http://localhost:8084}
+  payment:
+    url: ${PAYMENT_SERVICE_URL:http://localhost:8085}
+  shipping:
+    url: ${SHIPPING_SERVICE_URL:http://localhost:8086}
+  notification:
+    url: ${NOTIFICATION_SERVICE_URL:http://localhost:8087}
+  review:
+    url: ${REVIEW_SERVICE_URL:http://localhost:8088}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    gateway:
+      enabled: true
+
+logging:
+  level:
+    com.shopsphere.gateway: DEBUG
+    org.springframework.cloud.gateway: DEBUG
